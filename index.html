@@ -3,12 +3,37 @@
     <head>
         <meta charset="UTF-8">
         <title>To-Do List</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudfare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
         <div class="container">
-            <div class="section">
+            <div class="title-box">
                 <h2>To-Do List</h2>
                 <p>A tool to aid memory and reduce procrastination</p>
+            </div>
+            <div class="add-task">
+                <input type="text" id="new-task" placeholder="Add New Task">
+                <button>Add</button>
+            </div>
+            <div class="tasks-to-do">
+                <h3>Tasks To-Do</h3>
+                <ul id="not-done">
+
+                </ul>
+            </div>
+            <div class="tasks-done">
+                <h3>Tasks Done</h3>
+                <ul id="done">
+                    <li>
+                        <input type="checkbox">
+                        Watch a movie
+                        <i class="fa fa-edit"></i>
+                        <i class="fa fa-trash"></i>
+                    </li>
+                </ul>
+            </div>
+            <div class="delete-all">
+                <button id="delete">Delete All</button>
             </div>
         </div>
     </body>
