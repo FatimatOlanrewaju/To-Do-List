@@ -43,6 +43,7 @@ input[type="text"] {
     border: none;
     border-radius: 5px;
     padding: 8px;
+    font-weight: bold;
     color: #CED4B2;
     background-color: #61B0A0;
     text-align: center;
@@ -57,7 +58,7 @@ input[type="text"] {
 #add:hover {
     background-color: #AF5954;
     text-decoration: none;
-    font-weight: bold;
+
     cursor: pointer;
 }
 
@@ -102,6 +103,23 @@ li:hover {
     background: #AF5954;
 }
 
+li >  input[type="text"] {
+    width: 300px;
+    height: 10px;
+}
+  
+ul li input[type=text] {
+    display:none;
+}
+  
+ul li.editMode input[type=text] {
+    display: inline-block;
+}
+  
+ul li.editMode label {
+    display: none;
+}
+
 input[type="checkbox"] {
     transform: scale(1.5);
     margin: 0 10px;
@@ -113,12 +131,11 @@ input[type="checkbox"] {
     text-decoration: line-through;
 }
 
-li>i {
+.edit, .delete {
     float: right;
     position: relative;
     margin-left: 10px;
     margin-right: 10px;
-    transform: scale(1.2);
 }
 
 
