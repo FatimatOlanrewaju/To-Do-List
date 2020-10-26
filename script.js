@@ -1,53 +1,56 @@
-let input = document.getElementById("new-task");
+let taskInput = document.getElementById("new-task");
 let addButton = document.getElementById("add");
 let tasksToDo = document.getElementById("not-done");
 let tasksDone = document.getElementById("done");
 
-// Add Tasks
 
-let inputLength = () => {
-    return input.value.length;
+let inputLength = function() {
+    return taskInput.value.length;
 }
 
-// 
-let addNewTask = (taskTitle) => {
+// Add Tasks
+let addNewTask = function(taskTitle) {
     let tasksList = document.createElement("li");
     let checkBox = document.createElement("input");
     let label = document.createElement("label");
     // let link = document.createElement("a");
     let editInput = document.createElement("input");
-    let editButton = document.createElement("i");
-    let deleteButton = document.createElement("i");
+    let deleteButton = document.createElement("button");
+    let editButton = document.createElement("button");
+    
 
-    checkBox.type = "checkBox";
     label.innerText = taskTitle;
+    checkBox.type = "checkbox";
     // link.innerHTML = '<i class="fa fa-trash"></i>';
     editInput.type = "text";
-    editButton.className = "edit";
+    deleteButton.innerText = "Delete";
     deleteButton.className = "delete";
-
-    tasksList.appendChild(textInput);
+    editButton.innerText = "Edit";
+    editButton.className = "edit";
+    
     tasksList.appendChild(checkBox);
     tasksList.appendChild(label);
     // tasksList.appendChild(link);
-    tasksList.appendChild(editButton);
+    tasksList.appendChild(editInput);
     tasksList.appendChild(deleteButton);
-
+    tasksList.appendChild(editButton);
+    
     return tasksList;
 }
 
-let addTaskElements = () => {
-    if(inputLength < 0) {
-        alert("Please input a task.")
+let addTaskElements = function() {
+    if(taskInput.value == "") {
+        alert("Please input a task.");
+        return;
     }
     
-    let tasksList = addNewTask(input.value);
+    let tasksList = addNewTask(taskInput.value);
     tasksToDo.appendChild(tasksList);
     bindTaskEvents(tasksList, tasksCompleted);
-    input.value = "";
+    taskInput.value = "";
 }
 
-let editTaskElements = () => {
+let editTaskElements = function() {
     let tasksList = this.parentNode;
     let editInput = tasksList.querySelector("input[type=text]");
     let label = tasksList.querySelector("label");
@@ -60,38 +63,47 @@ let editTaskElements = () => {
     tasksList.classList.toggle("editMode");
 }
 
-let deleteTaskElements = () => {
+let deleteTaskElements = function() {
     let tasksList = this.parentNode;
-    let ul = tasksList.parentNode;
+    let ul = tasksList.parentNode; 
     ul.removeChild(tasksList);
 }
 
-let tasksCompleted = () => {
+let tasksCompleted = function() {
     let tasksList = this.parentNode;
     tasksDone.appendChild(tasksList);
     bindTaskEvents(tasksList, tasksIncomplete);
 }
 
-let tasksIncomplete = () => {
+let tasksIncomplete = function() {
     let tasksList = this.parentNode;
     tasksToDo.appendChild(tasksList);
     bindTaskEvents(tasksList, tasksCompleted);
 }
 
-let EnterKeyOnKeyboard = (event) => {
+let enterKeyOnKeyboard = function(event) {
     if(inputLength() > 0 && event.which === 13) {
         addTaskElements();
     }
 }
 
+// addButton.onclick = addTaskElements;
 addButton.addEventListener("click", addTaskElements);
-input.addEventListener("keypress", EnterKeyOnKeyboard);
+taskInput.addEventListener("keypress", enterKeyOnKeyboard);
 
-let bindTaskEvents = (tasksListItem, checkBoxEvent) {
+let bindTaskEvents = (tasksListItem, checkBoxEvent) => {
     let checkBox = tasksListItem.querySelector('input[type="checkbox"]');
-    let editButton = tasksListItem.querySelector("i");
-    let deleteButton = tasksListItem.querySelector("i");
-    editButton.onclick = editTaskElements;
+    let deleteButton = tasksListItem.querySelector("button.delete");
+    let editButton = tasksListItem.querySelector("button.edit");
     deleteButton.onclick = deleteTaskElements;
+    editButton.onclick = editTaskElements;
     checkBox.onchange = checkBoxEvent;
+}
+
+for (let i = 0; i < tasksToDo.children.length; i++) {
+    bindTaskEvents(tasksToDo.children[i], tasksCompleted);
+}
+
+for (let i = 0; i < tasksDone.children.length; i++) {
+    bindTaskEvents(tasksDone.children[i], tasksIncomplete);
 }
